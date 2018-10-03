@@ -1,4 +1,4 @@
-#include <libs/uwebsockets/uWS.h>
+#include <libs\uws\uWS.h>
 // this will be filled out later
 
 int main(int argc, char *argv[]) {
