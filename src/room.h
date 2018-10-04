@@ -1,4 +1,6 @@
-class BallRoom {
+#pragma once
+
+class Room {
   private:
     double getPercentFull();
     int getNumOfPlayers();
