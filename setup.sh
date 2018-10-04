@@ -33,6 +33,9 @@ downloadRP3D() {
 	mv src ../$LIB_ROOT/reactphysics3d
 	
 	# where the darn confusing compiling happens
+	cmake .
+	make
+	#make install # maybe
 
 	cd ../
 	rm -r temp
