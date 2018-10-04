@@ -3,11 +3,11 @@
 #include <helpers/util.h>
 
 Room::getNumOfPlayers() {
-  return numOfPlayers;//will change
+  return numOfPlayers;
 }
 
 Room::getMaxNumOfPlayers() {
-  return maxNumOfPlayers;//will change
+  return maxNumOfPlayers;
 }
 
 Room::addPlayer(uWS::WebSocket<uWS::CLIENT> *websocket) {
