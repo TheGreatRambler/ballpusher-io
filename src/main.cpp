@@ -1,5 +1,5 @@
 #include <libs\uws\uWS.h>
-#include <rooms.h>
+#include <room.h>
 // this will be filled out later
 
 int main(int argc, char *argv[]) {
@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
 	// stuff in arrays in lambdas are variables used by the lambda outside the scope
 	websocketHub.onConnection([rooms, Room](uWS::WebSocket<uWS::CLIENT> *ws, uWS::HttpRequest req) {
 		if (static_cast<int>(rooms.size()) == 0 || rooms.back().isFull()) {
-			Room newRoom = new Room();
+			Room* newRoom = new Room(); // pointer to room
 			newRoom.addPlayer(ws);
 			rooms.push_back(newRoom);
 		} else {
