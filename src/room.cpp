@@ -1,5 +1,6 @@
 #include <libs\uws\uWS.h>
 #include room.h
+#include <helpers/util.h>
 
 Room::getNumOfPlayers() {
   return numOfPlayers;//will change
@@ -9,9 +10,11 @@ Room::getMaxNumOfPlayers() {
   return maxNumOfPlayers;//will change
 }
 
-Room::addPlayer(uWS::WebSocket<uWS::CLIENT> websocket) {
+Room::addPlayer(uWS::WebSocket<uWS::CLIENT> *websocket) {
+  std::string initText = roomId;
+  sendSocketText(websocket, initText);
   std::unordered_map<std::string, auto> player = {
-    {"websocket", websocket}
+    {"websocket", websocket} // pointer to websocket
   };
   numOfPlayers += 1;
   players.push_back(player);
