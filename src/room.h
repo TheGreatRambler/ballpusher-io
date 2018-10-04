@@ -6,6 +6,7 @@ class Room {
     int getNumOfPlayers();
     int numOfPlayers = 0;
     int maxNumOfPlayers = 30;
+    std::string roomId;
     std::vector<std::unordered_map<std::string, auto>> players;
   public:
     bool isFull();
