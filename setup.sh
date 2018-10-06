@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LIB_ROOT="src/libs"
+LIB_ROOT="src/libs" 
 STATIC_ROOT="src/static"
 
 UWS_NAME="uws"
