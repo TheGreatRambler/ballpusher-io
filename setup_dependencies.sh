@@ -1,10 +1,14 @@
 #!/bin/bash
 
+NGINX_VERSION="1.15.4"
+
 LIB_ROOT="src/libs" 
 STATIC_ROOT="src/static"
+NGINX_ROOT="nginx"
 
 UWS_NAME="uws"
 RP3D_NAME="reactphysics3d"
+NGINX_NAME="nginx"
 
 # create folders for neccesary libraries
 mkdir --parents $LIB_ROOT/$UWS_NAME
@@ -55,6 +59,44 @@ downloadRP3D() {
 
 	cd ../
 	rm -r temp
+}
+
+downloadNginxDependencies() {
+	#pcre 8.42 download
+	wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.42.tar.gz
+	tar -zxf pcre-8.42.tar.gz
+	cd pcre-8.42
+	./configure
+	make
+	sudo make install
+	cd ../
+	
+	#zlib 1.2.11 download
+	wget http://zlib.net/zlib-1.2.11.tar.gz
+	tar -zxf zlib-1.2.11.tar.gz
+	cd zlib-1.2.11
+	./configure
+	make
+	sudo make install
+	cd ../
+	
+	#openssl 1.0.2p download
+	wget http://www.openssl.org/source/openssl-1.0.2p.tar.gz
+	tar -zxf openssl-1.0.2p.tar.gz
+	cd openssl-1.0.2p
+	./config --prefix=/usr
+	make
+	sudo make install
+	cd ../
+}
+
+downloadNGINX() {
+	cd NGINX_ROOT
+	downloadNginxDependencies #download Nginx dependencies
+	wget https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz
+	tar zxf nginx-$NGINX_VERSION.tar.gz
+	cd nginx-$NGINX_VERSION
+	./configure 
 }
 
 downloadUWS # download uWS and put the neccesary files
