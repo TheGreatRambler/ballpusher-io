@@ -11,8 +11,9 @@
 
 NGINX_VERSION="1.15.4" #has to be hardcoded
 
-LIB_ROOT="src/libs"
-STATIC_ROOT="src/static"
+SRC_ROOT="src"
+LIB_ROOT=$SRC_ROOT/libs
+STATIC_ROOT=$SRC_ROOT/static
 NGINX_ROOT="nginx"
 LOGS_ROOT="logs" #only used for building
 
@@ -230,10 +231,10 @@ then
 elif [ "$1" = "clean" ]
 then
     echo "All dependency-related files are being deleted"
-    rm -rf $LIB_ROOT
-    rm -rf $STATIC_ROOT
+    rm -rf $SRC_ROOT
     rm -rf $LOGS_ROOT
     rm -rf $NGINX_ROOT
+    rm -rf $MAKE_BACKUP_ROOT
     echo "Done!"
 else
     echo "A command must be specified, please!"
