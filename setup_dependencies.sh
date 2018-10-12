@@ -4,8 +4,10 @@ NGINX_VERSION="1.15.4" #has to be hardcoded
 
 LIB_ROOT="src/libs" 
 STATIC_ROOT="src/static"
-NGINX_ROOT="nginx" #only used for building
+NGINX_ROOT="nginx"
 LOGS_ROOT="logs" #only used for building
+
+MAKE_BACKUP_ROOT="makeBackupRoot"
 
 UWS_NAME="uws"
 RP3D_NAME="reactphysics3d"
@@ -88,6 +90,11 @@ downloadNginxDependencies() {
 	./configure
 	make > ../../$LOGS_ROOT/pcre.log #send output to log
 	sudo make install #maybe not
+	
+	cp Makefile Makefile-pcre
+	cp Makefile-pcre $MAKE_BACKUP_ROOT #move makefile to backup so pcre can be uninstalled later with `make uninstall`
+	rm Makefile-pcre
+	
 	cd ../
 	
 	#zlib 1.2.11 download
@@ -97,6 +104,11 @@ downloadNginxDependencies() {
 	./configure
 	make > ../../$LOGS_ROOT/zlib.log #send output to log
 	sudo make install #maybe not
+	
+	cp Makefile Makefile-zlib
+	cp Makefile-zlib $MAKE_BACKUP_ROOT #move makefile to backup so zlib can be uninstalled later with `make uninstall`
+	rm Makefile-zlib
+	
 	cd ../
 	
 	#openssl 1.1.1 (latest) download
@@ -106,10 +118,15 @@ downloadNginxDependencies() {
 	./config --prefix=/usr
 	make > ../../$LOGS_ROOT/openssl.log #send output to log
 	sudo make install #maybe not
+	
+	cp Makefile Makefile-openssl
+	cp Makefile-openssl $MAKE_BACKUP_ROOT #move makefile to backup so openssl can be uninstalled later with `make uninstall`
+	rm Makefile-openssl
+	
 	cd ../
 }
 
-removeNginxSourceAndDependencies() {
+removeNginxSourceAndDependenciesSource() {
 	rm -rf $NGINX_ROOT/nginx-$NGINX_VERSION
 	rm -rf $NGINX_ROOT/pcre-8.42
 	rm -rf $NGINX_ROOT/zlib-1.2.11
@@ -123,7 +140,7 @@ downloadNGINX() {
 	tar zxf nginx-$NGINX_VERSION.tar.gz
 	cd nginx-$NGINX_VERSION
 	echo "---CONFIG---" > ../../$LOGS_ROOT/$NGINX_ROOT.log
-	./configure --prefix=../ \ #the directory to build in is the $NGINX_ROOT folder
+	./configure --prefix=../ \ #the directory to build in is the $NGINX_ROOT folder, not THIS FOLDER!
 		#modules disabled because I want lightweight!
 		-–without-http_proxy_module \ #not sure yet
 		--without-http_empty_gif_module \
@@ -159,18 +176,19 @@ downloadNGINX() {
 	echo "---END_MAKE---" > ../../$LOGS_ROOT/$NGINX_ROOT.log
 	
 	cd ../../
-	#removeNginxSourceAndDependencies #if libs are built into Nginx statically, maybe...
+	removeNginxSourceAndDependenciesSource #libs are built into the operating system, so its fine
 	
 }
 
 echo "Now's the time to relax and read a book, because this will take a long time, undoubtably"
 echo "Wait for `BUILDING DONE` to know when the building is done"
 downloadUWS # download uWS and put the neccesary files
-downloadRP3D # download React Physics 3D and put the neccesary files
+downloadRP3D # download React Physics 3D and put the neccesary files in their folders
 downloadTOL # download Tiny Object Loader (one file) and move it to its header location
-downloadNGINX # download Nginx
+downloadNGINX # download Nginx + dependencies
 # |\___ $NGINX_ROOT/sbin/nginx -- executable
 # |\___ $NGINX_ROOT/conf/nginx.conf -- configuration file
 # |\___ $NGINX_ROOT/logs/nginx.pid -- PID path
 # |\___ $NGINX_ROOT/logs/error.log -- error log
 #  \___ $NGINX_ROOT/logs/access.log -- request log
+echo "BUILDING DONE, we hope :)"
