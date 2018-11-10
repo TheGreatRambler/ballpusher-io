@@ -1,2 +1,2 @@
 # ballpusher-io
-A IO game in development. See [PLANS.md](plans) to get an idea of what is happening.
+A IO game in development. See [plans](PLANS.md) to get an idea of what is happening.
