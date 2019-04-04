@@ -2,6 +2,9 @@
 #include <Urho3D/Engine/Engine.h>
 #include <Urho3D/Input/InputEvents.h>
 
+// The scenes (homepage now)
+#include <scenes/homePage/main.h>
+
 #if defined(__EMSCRIPTEN__)
 #include <emscripten/emscripten.h>
 #endif
