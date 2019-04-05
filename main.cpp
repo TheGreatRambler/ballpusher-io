@@ -28,6 +28,9 @@ class mainApp : public Application {
     engineParameters_[EP_FULL_SCREEN] = false;
     engineParameters_[EP_HEADLESS] = false;
     engineParameters_[EP_SOUND] = false;
+    // resource path will now be "bin/assets" (will pack so
+    //   it is "bin/assets.pak" instead)
+    engineParameters_[EP_RESOURCE_PATHS] = "assets;";
   }
   virtual void Start() {
     SubscribeToEvent(E_KEYDOWN, URHO3D_HANDLER(mainApp, HandleKeyDown));
