@@ -1,0 +1,64 @@
+<?xml version="1.0" ?>
+<scene id="1">
+	<component id="1" type="Octree" />
+	<component id="2" type="DebugRenderer" />
+	<component id="3" type="Light">
+		<attribute name="Light Type" value="Directional" />
+	</component>
+	<node id="1">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="Scene" />
+		<attribute name="Tags" />
+		<attribute name="Variables" />
+		<node id="2">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Icosphere" />
+			<attribute name="Tags" />
+			<attribute name="Variables" />
+			<component id="4" type="StaticModel">
+				<attribute name="Model" value="Model;Icosphere.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="3">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Icosphere.001" />
+			<attribute name="Tags" />
+			<attribute name="Variables" />
+			<component id="5" type="StaticModel">
+				<attribute name="Model" value="Model;Icosphere.001.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="4">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Cube.002" />
+			<attribute name="Tags" />
+			<attribute name="Variables" />
+			<component id="6" type="StaticModel">
+				<attribute name="Model" value="Model;Cube.002.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="5">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Cube.001" />
+			<attribute name="Tags" />
+			<attribute name="Variables" />
+			<component id="7" type="StaticModel">
+				<attribute name="Model" value="Model;Cube.001.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="6">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Cube" />
+			<attribute name="Tags" />
+			<attribute name="Variables" />
+			<component id="8" type="StaticModel">
+				<attribute name="Model" value="Model;Cube.mdl" />
+				<attribute name="Material" value="Material;Material.xml" />
+			</component>
+		</node>
+	</node>
+</scene>
