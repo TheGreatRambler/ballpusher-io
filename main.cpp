@@ -26,9 +26,9 @@ private:
 
 	void setCurrentScene(std::string name) {
 		// at some point, select scene based on name
-		currentLevel level = &platformerLevel(context_);
-		level->setupCurrentScene(name);
-		level->setCache(cache);
+		currentLevel = &platformerLevel(context_);
+		currentLevel->setupCurrentScene(name);
+		currentLevel->setCache(cache);
 	}
 
 public:
@@ -47,6 +47,9 @@ public:
 	virtual void Start() {
 		cache = GetSubsystem<ResourceCache>();
 		SubscribeToEvent(E_KEYDOWN, URHO3D_HANDLER(mainApp, HandleKeyDown));
+
+		// for now
+		setCurrentScene("TEST");
 	}
 	virtual void Stop() {
 	}

@@ -31,13 +31,28 @@ platformerLevel::setupCurrentScene(std::string name) {
 	// Let's setup a scene to render.
 	scene_ = new Scene(context_);
 
-	XMLFile* sceneFile = cache->GetResource<XMLFile>("scenes/levels/" + name + "/files/Scene.xml");
+	XMLFile* sceneFile = cache->GetResource<XMLFile>("scenes/levels/" + name + "/files/Scenes/Scene.xml");
 	// set scene to the XML file
 	scene_->LoadXML(sceneFile->GetRoot());
-	// Might need these
-	// Let the scene have an Octree component!
-	// scene_->CreateComponent<Octree>();
-	// Let's add an additional scene component for fun.
-	// scene_->CreateComponent<DebugRenderer>();
+	// create player
+	playerNode = scene_->CreateChild("PlayerMain");
+	playerNode->SetPosition(Vector3(0, 3, 0));
+	playerNode->SetScale(Vector3(1, 1, 1));
+	StaticModel* playerStaticModel = playerNode->CreateComponent<StaticModel>();
+	playerNode->SetModel(cache->GetResource<Model>("creatures/player/normal/Models/Cube.mdl"));
+	playerNode->SetMaterial(cache->GetResource<Material>("creatures/player/normal/Materials/Material.xml"));
+	playerNode->SetCastShadows(true);
+
+	// camera
+	cameraNode_ = scene_->CreateChild("Camera");
+	playerNode->SetPosition(Vector3(0, 3, -10));
+	Camera* camera = cameraNode_->CreateComponent<Camera>();
+	camera->SetFarClip(2000);
+
 	SharedPtr<Viewport> viewport(new Viewport(context_, scene_, cameraNode_->GetComponent<Camera>()));
+}
+
+platformerLevel::update() {
+	// face camera towards player
+	cameraNode_->LookAt(playerNode->GetPosition());
 }
