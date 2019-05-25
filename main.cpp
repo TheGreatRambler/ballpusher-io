@@ -1,4 +1,4 @@
-#include <string>
+#include <string> WindowTitle FullScreen "" Headless "" Sound Sound "" ResourcePaths FullScreen "" Headless "" Sound Sound "" ResourcePaths FullScreen "" Headless "" Sound Sound "" ResourcePaths
 
 #include <Urho3D/Engine/Application.h>
 #include <Urho3D/Engine/Engine.h>
@@ -14,7 +14,7 @@
 using namespace Urho3D;
 
 class mainApp : public Application {
-	URHO3D_OBJECT(TutorialApp, Application)
+	URHO3D_OBJECT(mainApp, Application)
 private:
 	ResourceCache* cache;
 	platformerLevel* currentLevel;
@@ -36,13 +36,13 @@ public:
 	}
 	virtual void Setup() {
 		// Setup the engine parameters and other things
-		engineParameters_[EP_WINDOW_TITLE] = "Ballpusher IO";
-		engineParameters_[EP_FULL_SCREEN] = false;
-		engineParameters_[EP_HEADLESS] = false;
-		engineParameters_[EP_SOUND] = false;
+		engineParameters_["WindowTitle"] = "Ballpusher IO";
+		engineParameters_["FullScreen"] = false;
+		engineParameters_["Headless"] = false;
+		engineParameters_["Sound"] = false;
 		// resource path will now be "bin/assets" (will pack so
 		//   it is "bin/assets.pak" instead)
-		engineParameters_[EP_RESOURCE_PATHS] = "assets;";
+		engineParameters_["ResourcePaths"] = "assets;";
 	}
 	virtual void Start() {
 		cache = GetSubsystem<ResourceCache>();

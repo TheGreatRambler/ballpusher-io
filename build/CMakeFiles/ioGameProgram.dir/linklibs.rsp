@@ -1,0 +1,1 @@
+C:/Users/aehar/com_internals/others/windowsBinForUrho3D/lib/libUrho3D.a -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lversion -luuid -lws2_32 -lwinmm -lopengl32 -limm32 -lole32 -loleaut32 -lversion -luuid -lws2_32 -lopengl32 -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
