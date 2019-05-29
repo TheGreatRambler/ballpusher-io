@@ -93,4 +93,5 @@ CURRENT_LOCATION                   |
 - If you do a normal jump when you land from a fall, the height of the jump is half of the fall height (with a minimum so you don't have a tiny jump when you fall from a short height) and the larger the fall, the greater the chance that the stick breaks
 - Once all sticks are gone, no fancy moves can be undertaken and your health becomes the equivalent of three hearts. Once these are gone, you are dead
 - You start with three sticks but can gain more sticks from trees
-- If a tree is damaged, whether from the stick or from an enemy, it has a chance of dropping a stick, allowing for infinite lives if the player is aware of it
+- If a tree is damaged, whether from the stick or from an enemy, it has a chance of dropping a stick, allowing for infinite lives if the player is aware of it. The tree breaks eventually, however, after a lot of damage
+- When you die, coins are deducted from your supply to pay medical bills. If you don't have the 5 coins to pay for a doctor, you go to the beginning of the level/world (haven't figured it out yet)
