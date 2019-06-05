@@ -58,7 +58,7 @@ CURRENT_LOCATION                   |
   - CEILING && FLOOR: Do nothing
   - CEILING: Do nothing
 - The faces are actually small cubes on each face:
-  - THe `JUMP_COLLIDER` is for the jump algorithm explained above
+  - THe `JUMP_COLLIDER` is for the jump algorithm explained above (ove caveat: for the floor and ceiling, the `JUMP_COLLIDER` covers the entire bottom like the touch collider below)
   - The `TOUCH_COLLIDER` is for determining whether you can walk forwards
   - Every face looks like this
   - The rectangle of the person hitbox is surrounded with these collision shapes (which do not actually effect the world, they are only there to determine collision)
