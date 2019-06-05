@@ -95,3 +95,22 @@ CURRENT_LOCATION                   |
 - You start with three sticks but can gain more sticks from trees
 - If a tree is damaged, whether from the stick or from an enemy, it has a chance of dropping a stick, allowing for infinite lives if the player is aware of it. The tree breaks eventually, however, after a lot of damage
 - When you die, coins are deducted from your supply to pay medical bills. If you don't have the 5 coins to pay for a doctor, you go to the beginning of the level/world (haven't figured it out yet)
+- Stick particulars:
+  - Sticks are shown in the top left and any stick can be chosen at any one time (scroll through items using a keybind I haven't figured out yet)
+  - Powerups are special sticks that grant special abilities
+  - They are sent to the end of the stick queue and they look the same except for a different color
+  - They are automatically selected when picked up (along with any normal stick), but you can always manually choose the stick if need be (autoselect can be a setting)
+  - Upon using a stick, the current speed is taken to account to add damage to the stick
+  - The damage only effects the stick above a certain point
+  - When the damage exceeds the health of a stick, it breaks
+  - The stick can break upon a normal use or a high-speed use, both work
+  - When broken, the stick gives extra veolocity to the player as opposed to its normal tension
+  - The damage bar is always shown for each stick in the top left (see above)
+  - For sticks, an example:
+    - Brown: Normal
+    - Green: Autoheal
+    - Blue: Extra health
+    - White: Floaty
+    - Red: Extra damage to enemies and boost upwards when hitting water (steam pushes upwards) (like lava)
+    - Yellow: Coins given on every use
+    - ETC...
