@@ -58,7 +58,7 @@ CURRENT_LOCATION                   |
   - CEILING && FLOOR: Do nothing
   - CEILING: Do nothing
 - The faces are actually small cubes on each face:
-  - THe `JUMP_COLLIDER` is for the jump algorithm explained above
+  - The `JUMP_COLLIDER` is for the jump algorithm explained above (ove caveat: for the floor and ceiling, the `JUMP_COLLIDER` covers the entire bottom like the touch collider below)
   - The `TOUCH_COLLIDER` is for determining whether you can walk forwards
   - Every face looks like this
   - The rectangle of the person hitbox is surrounded with these collision shapes (which do not actually effect the world, they are only there to determine collision)
@@ -89,9 +89,28 @@ CURRENT_LOCATION                   |
 - Lives in the game are sticks
 - You get a life when you find a tree with a stick on the ground
 - You attack enemies with a stick
-- When you hit an enemy, including lava, there is a 9/10 chance you lose the stick. Sometimes, however, the stick is not lost
-- If you do a normal jump when you land from a fall, the height of the jump is half of the fall height (with a minimum so you don't have a tiny jump when you fall from a short height) and the larger the fall, the greater the chance that the stick breaks
+- When you hit an enemy, including lava, there is a 1/10 chance the stick loses more health. Mostly, the stick loses helath equivilent to the enemy strength
+- If you do a normal jump when you land from a large fall, the height of the stick jump is half of the fall height (with a minimum so you don't have a tiny jump when you fall from a short height) and the larger the fall, the greater the chance that the stick loses extra health. This only occurs if the speed is high enough. If the speed is low, it is a normal jump
 - Once all sticks are gone, no fancy moves can be undertaken and your health becomes the equivalent of three hearts. Once these are gone, you are dead
 - You start with three sticks but can gain more sticks from trees
 - If a tree is damaged, whether from the stick or from an enemy, it has a chance of dropping a stick, allowing for infinite lives if the player is aware of it. The tree breaks eventually, however, after a lot of damage
 - When you die, coins are deducted from your supply to pay medical bills. If you don't have the 5 coins to pay for a doctor, you go to the beginning of the level/world (haven't figured it out yet)
+- Stick particulars:
+  - Sticks are shown in the top left and any stick can be chosen at any one time (scroll through items using a keybind I haven't figured out yet)
+  - Powerups are special sticks that grant special abilities
+  - They are sent to the end of the stick queue and they look the same except for a different color
+  - They are automatically selected when picked up (along with any normal stick), but you can always manually choose the stick if need be (autoselect can be a setting)
+  - Upon using a stick, the current speed is taken to account to add damage to the stick
+  - The damage only effects the stick above a certain point
+  - When the damage exceeds the health of a stick, it breaks
+  - The stick can break upon a normal use or a high-speed use, both work
+  - When broken, the stick gives extra veolocity to the player as opposed to its normal tension
+  - The damage bar is always shown for each stick in the top left (see above)
+  - For sticks, an example:
+    - Brown: Normal
+    - Green: Autoheal
+    - Blue: Extra health
+    - White: Floaty
+    - Red: Extra damage to enemies and boost upwards when hitting water (steam pushes upwards) (like lava)
+    - Yellow: Coins given on every use
+    - ETC...
