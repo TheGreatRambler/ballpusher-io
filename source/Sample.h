@@ -51,71 +51,71 @@ const float TOUCH_SENSITIVITY = 2.0f;
 ///    - Init touch input on mobile platform using screen joysticks (patched for each individual sample)
 class Sample : public Application
 {
-    // Enable type information.
-    URHO3D_OBJECT(Sample, Application);
+	// Enable type information.
+	URHO3D_OBJECT(Sample, Application);
 
 public:
-    /// Construct.
-    Sample(Context* context);
+	/// Construct.
+	Sample(Context* context);
 
-    /// Setup before engine initialization. Modifies the engine parameters.
-    virtual void Setup();
-    /// Setup after engine initialization. Creates the logo, console & debug HUD.
-    virtual void Start();
-    /// Cleanup after the main loop. Called by Application.
-    virtual void Stop();
+	/// Setup before engine initialization. Modifies the engine parameters.
+	virtual void Setup();
+	/// Setup after engine initialization. Creates the logo, console & debug HUD.
+	virtual void Start();
+	/// Cleanup after the main loop. Called by Application.
+	virtual void Stop();
 
 protected:
-    /// Return XML patch instructions for screen joystick layout for a specific sample app, if any.
-    virtual String GetScreenJoystickPatchString() const { return String::EMPTY; }
-    /// Initialize touch input on mobile platform.
-    void InitTouchInput();
-    /// Initialize mouse mode on non-web platform.
-    void InitMouseMode(MouseMode mode);
-    /// Control logo visibility.
-    void SetLogoVisible(bool enable);
+	/// Return XML patch instructions for screen joystick layout for a specific sample app, if any.
+	virtual String GetScreenJoystickPatchString() const { return String::EMPTY; }
+	/// Initialize touch input on mobile platform.
+	void InitTouchInput();
+	/// Initialize mouse mode on non-web platform.
+	void InitMouseMode(MouseMode mode);
+	/// Control logo visibility.
+	void SetLogoVisible(bool enable);
 
-    /// Logo sprite.
-    SharedPtr<Sprite> logoSprite_;
-    /// Scene.
-    SharedPtr<Scene> scene_;
-    /// Camera scene node.
-    SharedPtr<Node> cameraNode_;
-    /// Camera yaw angle.
-    float yaw_;
-    /// Camera pitch angle.
-    float pitch_;
-    /// Flag to indicate whether touch input has been enabled.
-    bool touchEnabled_;
-    /// Mouse mode option to use in the sample.
-    MouseMode useMouseMode_;
+	/// Logo sprite.
+	SharedPtr<Sprite> logoSprite_;
+	/// Scene.
+	SharedPtr<Scene> scene_;
+	/// Camera scene node.
+	SharedPtr<Node> cameraNode_;
+	/// Camera yaw angle.
+	float yaw_;
+	/// Camera pitch angle.
+	float pitch_;
+	/// Flag to indicate whether touch input has been enabled.
+	bool touchEnabled_;
+	/// Mouse mode option to use in the sample.
+	MouseMode useMouseMode_;
 
 private:
-    /// Create logo.
-    void CreateLogo();
-    /// Set custom window Title & Icon
-    void SetWindowTitleAndIcon();
-    /// Create console and debug HUD.
-    void CreateConsoleAndDebugHud();
-    /// Handle request for mouse mode on web platform.
-    void HandleMouseModeRequest(StringHash eventType, VariantMap& eventData);
-    /// Handle request for mouse mode change on web platform.
-    void HandleMouseModeChange(StringHash eventType, VariantMap& eventData);
-    /// Handle key down event to process key controls common to all samples.
-    void HandleKeyDown(StringHash eventType, VariantMap& eventData);
-    /// Handle key up event to process key controls common to all samples.
-    void HandleKeyUp(StringHash eventType, VariantMap& eventData);
-    /// Handle scene update event to control camera's pitch and yaw for all samples.
-    void HandleSceneUpdate(StringHash eventType, VariantMap& eventData);
-    /// Handle touch begin event to initialize touch input on desktop platform.
-    void HandleTouchBegin(StringHash eventType, VariantMap& eventData);
+	/// Create logo.
+	void CreateLogo();
+	/// Set custom window Title & Icon
+	void SetWindowTitleAndIcon();
+	/// Create console and debug HUD.
+	void CreateConsoleAndDebugHud();
+	/// Handle request for mouse mode on web platform.
+	void HandleMouseModeRequest(StringHash eventType, VariantMap& eventData);
+	/// Handle request for mouse mode change on web platform.
+	void HandleMouseModeChange(StringHash eventType, VariantMap& eventData);
+	/// Handle key down event to process key controls common to all samples.
+	void HandleKeyDown(StringHash eventType, VariantMap& eventData);
+	/// Handle key up event to process key controls common to all samples.
+	void HandleKeyUp(StringHash eventType, VariantMap& eventData);
+	/// Handle scene update event to control camera's pitch and yaw for all samples.
+	void HandleSceneUpdate(StringHash eventType, VariantMap& eventData);
+	/// Handle touch begin event to initialize touch input on desktop platform.
+	void HandleTouchBegin(StringHash eventType, VariantMap& eventData);
 
-    /// Screen joystick index for navigational controls (mobile platforms only).
-    unsigned screenJoystickIndex_;
-    /// Screen joystick index for settings (mobile platforms only).
-    unsigned screenJoystickSettingsIndex_;
-    /// Pause flag.
-    bool paused_;
+	/// Screen joystick index for navigational controls (mobile platforms only).
+	unsigned screenJoystickIndex_;
+	/// Screen joystick index for settings (mobile platforms only).
+	unsigned screenJoystickSettingsIndex_;
+	/// Pause flag.
+	bool paused_;
 };
 
 #include "Sample.inl"

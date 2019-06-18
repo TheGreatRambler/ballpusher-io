@@ -1,7 +1,5 @@
 # Set project name
 project (IoGame)
-# Define target name
-set (TARGET_NAME IoGame)
 
 ######################################
 
@@ -28,7 +26,7 @@ endif ()
 set (CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/CMake/Modules)
 # Include Urho3D Cmake common module
 include (UrhoCommon)
-# Define source files
-define_source_files ()
+# Add source files to project
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/source")
 # Setup target with resource copying
 setup_main_executable ()
