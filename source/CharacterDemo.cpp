@@ -1,25 +1,3 @@
-//
-// Copyright (c) 2008-2017 the Urho3D project.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-//
-
 #include <Urho3D/Core/CoreEvents.h>
 #include <Urho3D/Core/ProcessUtils.h>
 #include <Urho3D/Engine/Engine.h>
@@ -31,9 +9,9 @@
 #include <Urho3D/Graphics/Octree.h>
 #include <Urho3D/Graphics/Renderer.h>
 #include <Urho3D/Graphics/Zone.h>
+#include <Urho3D/IO/FileSystem.h>
 #include <Urho3D/Input/Controls.h>
 #include <Urho3D/Input/Input.h>
-#include <Urho3D/IO/FileSystem.h>
 #include <Urho3D/Physics/CollisionShape.h>
 #include <Urho3D/Physics/PhysicsWorld.h>
 #include <Urho3D/Physics/RigidBody.h>
@@ -45,28 +23,24 @@
 
 #include "Character.h"
 #include "CharacterDemo.h"
+#include "Main.h"
 #include "Touch.h"
 
 #include <Urho3D/DebugNew.h>
 
 URHO3D_DEFINE_APPLICATION_MAIN(CharacterDemo)
 
-CharacterDemo::CharacterDemo(Context* context) :
-	Sample(context),
-	firstPerson_(false)
-{
+CharacterDemo::CharacterDemo(Context* context) : Main(context), firstPerson_(false) {
 	// Register factory and attributes for the Character component so it can be created via CreateComponent, and loaded / saved
 	Character::RegisterObject(context);
 }
 
-CharacterDemo::~CharacterDemo()
-{
+CharacterDemo::~CharacterDemo() {
 }
 
-void CharacterDemo::Start()
-{
+void CharacterDemo::Start() {
 	// Execute base class startup
-	Sample::Start();
+	Main::Start();
 	if (touchEnabled_)
 		touch_ = new Touch(context_, TOUCH_SENSITIVITY);
 
@@ -82,12 +56,11 @@ void CharacterDemo::Start()
 	// Subscribe to necessary events
 	SubscribeToEvents();
 
-	// Set the mouse mode to use in the sample
-	Sample::InitMouseMode(MM_RELATIVE);
+	// Set the mouse mode to use in the Main
+	Main::InitMouseMode(MM_RELATIVE);
 }
 
-void CharacterDemo::CreateScene()
-{
+void CharacterDemo::CreateScene() {
 	ResourceCache* cache = GetSubsystem<ResourceCache>();
 
 	scene_ = new Scene(context_);
@@ -139,8 +112,7 @@ void CharacterDemo::CreateScene()
 
 	// Create mushrooms of varying sizes
 	const unsigned NUM_MUSHROOMS = 60;
-	for (unsigned i = 0; i < NUM_MUSHROOMS; ++i)
-	{
+	for (unsigned i = 0; i < NUM_MUSHROOMS; ++i) {
 		Node* objectNode = scene_->CreateChild("Mushroom");
 		objectNode->SetPosition(Vector3(Random(180.0f) - 90.0f, 0.0f, Random(180.0f) - 90.0f));
 		objectNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
@@ -158,8 +130,7 @@ void CharacterDemo::CreateScene()
 
 	// Create movable boxes. Let them fall from the sky at first
 	const unsigned NUM_BOXES = 100;
-	for (unsigned i = 0; i < NUM_BOXES; ++i)
-	{
+	for (unsigned i = 0; i < NUM_BOXES; ++i) {
 		float scale = Random(2.0f) + 0.5f;
 
 		Node* objectNode = scene_->CreateChild("Box");
@@ -180,8 +151,7 @@ void CharacterDemo::CreateScene()
 	}
 }
 
-void CharacterDemo::CreateCharacter()
-{
+void CharacterDemo::CreateCharacter() {
 	ResourceCache* cache = GetSubsystem<ResourceCache>();
 
 	Node* objectNode = scene_->CreateChild("Jack");
@@ -189,8 +159,8 @@ void CharacterDemo::CreateCharacter()
 
 	// spin node
 	Node* adjustNode = objectNode->CreateChild("AdjNode");
-	adjustNode->SetRotation( Quaternion(180, Vector3(0,1,0) ) );
-	
+	adjustNode->SetRotation(Quaternion(180, Vector3(0, 1, 0)));
+
 	// Create the rendering component + animation controller
 	AnimatedModel* object = adjustNode->CreateComponent<AnimatedModel>();
 	object->SetModel(cache->GetResource<Model>("Models/Mutant/Mutant.mdl"));
@@ -223,18 +193,15 @@ void CharacterDemo::CreateCharacter()
 	character_ = objectNode->CreateComponent<Character>();
 }
 
-void CharacterDemo::CreateInstructions()
-{
+void CharacterDemo::CreateInstructions() {
 	ResourceCache* cache = GetSubsystem<ResourceCache>();
 	UI* ui = GetSubsystem<UI>();
 
 	// Construct new Text object, set string to display and font to use
 	Text* instructionText = ui->GetRoot()->CreateChild<Text>();
-	instructionText->SetText(
-		"Use WASD keys and mouse/touch to move\n"
-		"Space to jump, F to toggle 1st/3rd person\n"
-		"F5 to save scene, F7 to load"
-	);
+	instructionText->SetText("Use WASD keys and mouse/touch to move\n"
+							 "Space to jump, F to toggle 1st/3rd person\n"
+							 "F5 to save scene, F7 to load");
 	instructionText->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
 	// The text has multiple rows. Center them in relation to each other
 	instructionText->SetTextAlignment(HA_CENTER);
@@ -245,26 +212,23 @@ void CharacterDemo::CreateInstructions()
 	instructionText->SetPosition(0, ui->GetRoot()->GetHeight() / 4);
 }
 
-void CharacterDemo::SubscribeToEvents()
-{
+void CharacterDemo::SubscribeToEvents() {
 	// Subscribe to Update event for setting the character controls before physics simulation
 	SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(CharacterDemo, HandleUpdate));
 
 	// Subscribe to PostUpdate event for updating the camera position after physics simulation
 	SubscribeToEvent(E_POSTUPDATE, URHO3D_HANDLER(CharacterDemo, HandlePostUpdate));
 
-	// Unsubscribe the SceneUpdate event from base class as the camera node is being controlled in HandlePostUpdate() in this sample
+	// Unsubscribe the SceneUpdate event from base class as the camera node is being controlled in HandlePostUpdate() in this Main
 	UnsubscribeFromEvent(E_SCENEUPDATE);
 }
 
-void CharacterDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
-{
+void CharacterDemo::HandleUpdate(StringHash eventType, VariantMap& eventData) {
 	using namespace Update;
 
 	Input* input = GetSubsystem<Input>();
 
-	if (character_)
-	{
+	if (character_) {
 		// Clear previous controls
 		character_->controls_.Set(CTRL_FORWARD | CTRL_BACK | CTRL_LEFT | CTRL_RIGHT | CTRL_JUMP, false);
 
@@ -274,10 +238,8 @@ void CharacterDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
 
 		// Update controls using keys
 		UI* ui = GetSubsystem<UI>();
-		if (!ui->GetFocusElement())
-		{
-			if (!touch_ || !touch_->useGyroscope_)
-			{
+		if (!ui->GetFocusElement()) {
+			if (!touch_ || !touch_->useGyroscope_) {
 				character_->controls_.Set(CTRL_FORWARD, input->GetKeyDown(KEY_W));
 				character_->controls_.Set(CTRL_BACK, input->GetKeyDown(KEY_S));
 				character_->controls_.Set(CTRL_LEFT, input->GetKeyDown(KEY_A));
@@ -286,12 +248,10 @@ void CharacterDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
 			character_->controls_.Set(CTRL_JUMP, input->GetKeyDown(KEY_SPACE));
 
 			// Add character yaw & pitch from the mouse motion or touch input
-			if (touchEnabled_)
-			{
-				for (unsigned i = 0; i < input->GetNumTouches(); ++i)
-				{
+			if (touchEnabled_) {
+				for (unsigned i = 0; i < input->GetNumTouches(); ++i) {
 					TouchState* state = input->GetTouch(i);
-					if (!state->touchedElement_)    // Touch on empty space
+					if (!state->touchedElement_) // Touch on empty space
 					{
 						Camera* camera = cameraNode_->GetComponent<Camera>();
 						if (!camera)
@@ -302,11 +262,9 @@ void CharacterDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
 						character_->controls_.pitch_ += TOUCH_SENSITIVITY * camera->GetFov() / graphics->GetHeight() * state->delta_.y_;
 					}
 				}
-			}
-			else
-			{
-				character_->controls_.yaw_ += (float)input->GetMouseMoveX() * YAW_SENSITIVITY;
-				character_->controls_.pitch_ += (float)input->GetMouseMoveY() * YAW_SENSITIVITY;
+			} else {
+				character_->controls_.yaw_ += (float) input->GetMouseMoveX() * YAW_SENSITIVITY;
+				character_->controls_.pitch_ += (float) input->GetMouseMoveY() * YAW_SENSITIVITY;
 			}
 			// Limit pitch
 			character_->controls_.pitch_ = Clamp(character_->controls_.pitch_, -80.0f, 80.0f);
@@ -322,13 +280,11 @@ void CharacterDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
 				touch_->useGyroscope_ = !touch_->useGyroscope_;
 
 			// Check for loading / saving the scene
-			if (input->GetKeyPress(KEY_F5))
-			{
+			if (input->GetKeyPress(KEY_F5)) {
 				File saveFile(context_, GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/CharacterDemo.xml", FILE_WRITE);
 				scene_->SaveXML(saveFile);
 			}
-			if (input->GetKeyPress(KEY_F7))
-			{
+			if (input->GetKeyPress(KEY_F7)) {
 				File loadFile(context_, GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/CharacterDemo.xml", FILE_READ);
 				scene_->LoadXML(loadFile);
 				// After loading we have to reacquire the weak pointer to the Character component, as it has been recreated
@@ -341,8 +297,7 @@ void CharacterDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
 	}
 }
 
-void CharacterDemo::HandlePostUpdate(StringHash eventType, VariantMap& eventData)
-{
+void CharacterDemo::HandlePostUpdate(StringHash eventType, VariantMap& eventData) {
 	if (!character_)
 		return;
 
@@ -360,13 +315,10 @@ void CharacterDemo::HandlePostUpdate(StringHash eventType, VariantMap& eventData
 	Vector3 headWorldTarget = headNode->GetWorldPosition() + headDir * Vector3(0.0f, 0.0f, -1.0f);
 	headNode->LookAt(headWorldTarget, Vector3(0.0f, 1.0f, 0.0f));
 
-	if (firstPerson_)
-	{
+	if (firstPerson_) {
 		cameraNode_->SetPosition(headNode->GetWorldPosition() + rot * Vector3(0.0f, 0.15f, 0.2f));
 		cameraNode_->SetRotation(dir);
-	}
-	else
-	{
+	} else {
 		// Third person camera: position behind the character
 		Vector3 aimPoint = characterNode->GetPosition() + rot * Vector3(0.0f, 1.7f, 0.0f);
 

@@ -28,5 +28,3 @@ set (CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/CMake/Modules)
 include (UrhoCommon)
 # Add source files to project
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/source")
-# Setup target with resource copying
-setup_main_executable ()

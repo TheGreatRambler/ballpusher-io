@@ -64,39 +64,57 @@ CMAKE_SOURCE_DIR = C:\Users\aehar\Desktop\projects\IO_Game
 CMAKE_BINARY_DIR = C:\Users\aehar\Desktop\projects\IO_Game\build
 
 #=============================================================================
-# Target rules for target CMakeFiles/IoGame.dir
+# Directory level rules for directory source
+
+# Convenience name for "all" pass in the directory.
+source/all: source/CMakeFiles/IoGameTarget.dir/all
+
+.PHONY : source/all
+
+# Convenience name for "clean" pass in the directory.
+source/clean: source/CMakeFiles/IoGameTarget.dir/clean
+
+.PHONY : source/clean
+
+# Convenience name for "preinstall" pass in the directory.
+source/preinstall:
+
+.PHONY : source/preinstall
+
+#=============================================================================
+# Target rules for target source/CMakeFiles/IoGameTarget.dir
 
 # All Build rule for target.
-CMakeFiles/IoGame.dir/all:
-	$(MAKE) -f CMakeFiles\IoGame.dir\build.make CMakeFiles/IoGame.dir/depend
-	$(MAKE) -f CMakeFiles\IoGame.dir\build.make CMakeFiles/IoGame.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\aehar\Desktop\projects\IO_Game\build\CMakeFiles --progress-num=1,2 "Built target IoGame"
-.PHONY : CMakeFiles/IoGame.dir/all
+source/CMakeFiles/IoGameTarget.dir/all:
+	$(MAKE) -f source\CMakeFiles\IoGameTarget.dir\build.make source/CMakeFiles/IoGameTarget.dir/depend
+	$(MAKE) -f source\CMakeFiles\IoGameTarget.dir\build.make source/CMakeFiles/IoGameTarget.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\aehar\Desktop\projects\IO_Game\build\CMakeFiles --progress-num=1,2,3,4,5 "Built target IoGameTarget"
+.PHONY : source/CMakeFiles/IoGameTarget.dir/all
 
 # Include target in all.
-all: CMakeFiles/IoGame.dir/all
+all: source/CMakeFiles/IoGameTarget.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/IoGame.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\aehar\Desktop\projects\IO_Game\build\CMakeFiles 2
-	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/IoGame.dir/all
+source/CMakeFiles/IoGameTarget.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\aehar\Desktop\projects\IO_Game\build\CMakeFiles 5
+	$(MAKE) -f CMakeFiles\Makefile2 source/CMakeFiles/IoGameTarget.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\aehar\Desktop\projects\IO_Game\build\CMakeFiles 0
-.PHONY : CMakeFiles/IoGame.dir/rule
+.PHONY : source/CMakeFiles/IoGameTarget.dir/rule
 
 # Convenience name for target.
-IoGame: CMakeFiles/IoGame.dir/rule
+IoGameTarget: source/CMakeFiles/IoGameTarget.dir/rule
 
-.PHONY : IoGame
-
-# clean rule for target.
-CMakeFiles/IoGame.dir/clean:
-	$(MAKE) -f CMakeFiles\IoGame.dir\build.make CMakeFiles/IoGame.dir/clean
-.PHONY : CMakeFiles/IoGame.dir/clean
+.PHONY : IoGameTarget
 
 # clean rule for target.
-clean: CMakeFiles/IoGame.dir/clean
+source/CMakeFiles/IoGameTarget.dir/clean:
+	$(MAKE) -f source\CMakeFiles\IoGameTarget.dir\build.make source/CMakeFiles/IoGameTarget.dir/clean
+.PHONY : source/CMakeFiles/IoGameTarget.dir/clean
+
+# clean rule for target.
+clean: source/CMakeFiles/IoGameTarget.dir/clean
 
 .PHONY : clean
 

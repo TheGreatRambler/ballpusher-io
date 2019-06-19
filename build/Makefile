@@ -156,44 +156,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named IoGame
+# Target rules for targets named IoGameTarget
 
 # Build rule for target.
-IoGame: cmake_check_build_system
-	$(MAKE) -f CMakeFiles\Makefile2 IoGame
-.PHONY : IoGame
+IoGameTarget: cmake_check_build_system
+	$(MAKE) -f CMakeFiles\Makefile2 IoGameTarget
+.PHONY : IoGameTarget
 
 # fast build rule for target.
-IoGame/fast:
-	$(MAKE) -f CMakeFiles\IoGame.dir\build.make CMakeFiles/IoGame.dir/build
-.PHONY : IoGame/fast
-
-main.obj: main.cpp.obj
-
-.PHONY : main.obj
-
-# target to build an object file
-main.cpp.obj:
-	$(MAKE) -f CMakeFiles\IoGame.dir\build.make CMakeFiles/IoGame.dir/main.cpp.obj
-.PHONY : main.cpp.obj
-
-main.i: main.cpp.i
-
-.PHONY : main.i
-
-# target to preprocess a source file
-main.cpp.i:
-	$(MAKE) -f CMakeFiles\IoGame.dir\build.make CMakeFiles/IoGame.dir/main.cpp.i
-.PHONY : main.cpp.i
-
-main.s: main.cpp.s
-
-.PHONY : main.s
-
-# target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) -f CMakeFiles\IoGame.dir\build.make CMakeFiles/IoGame.dir/main.cpp.s
-.PHONY : main.cpp.s
+IoGameTarget/fast:
+	$(MAKE) -f source\CMakeFiles\IoGameTarget.dir\build.make source/CMakeFiles/IoGameTarget.dir/build
+.PHONY : IoGameTarget/fast
 
 # Help Target
 help:
@@ -201,16 +174,13 @@ help:
 	@echo ... all (the default if no target is provided)
 	@echo ... clean
 	@echo ... depend
-	@echo ... IoGame
 	@echo ... install/local
 	@echo ... install
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... list_install_components
 	@echo ... install/strip
-	@echo ... main.obj
-	@echo ... main.i
-	@echo ... main.s
+	@echo ... IoGameTarget
 .PHONY : help
 
 
