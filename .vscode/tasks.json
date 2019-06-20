@@ -2,10 +2,20 @@
 	// See https://go.microsoft.com/fwlink/?LinkId=733558
 	// for the documentation about the tasks.json format
 	"version": "2.0.0",
+	"windows": {
+		"options": {
+			"shell": {
+				"executable": "cmd.exe",
+				"args": [
+					"/d", "/c", "%CMDER_ROOT%\\vendor\\init.bat", "&&"
+				]
+			}
+		}
+	},
 	"tasks": [{
 		"label": "Build code (with make)",
 		// the ls is required for some reason I can't seem to fathom
-		"command": "ls && make -C build",
+		"command": "make -C build",
 		"type": "shell",
 		"problemMatcher": {
 			"base": "$gcc",
