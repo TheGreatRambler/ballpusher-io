@@ -3,31 +3,10 @@
 #include <Urho3D/UI/Window.h>
 
 #include "../SettingsGlobal.h"
+#include "../menuBase.h"
 
-class pauseMenu {
-private:
-	UI* ui;
-	Context* context;
-	Window* window;
-
-public:
-	pauseMenu(UI* ui_, Context* context_) {
-		ui = ui_;
-		context = context_;
-		window = new Window(context_);
-		ui_->GetRoot()->AddChild(window);
-		window->SetVisible(false);
-		window->SetMinWidth(384);
-		window->SetLayout(LM_VERTICAL, 6, IntRect(6, 6, 6, 6));
-		window->SetAlignment(HA_CENTER, VA_CENTER);
-		window->SetName("PauseMenu");
-	}
-
-	void openPauseMenu() {
-		window->SetVisible(true);
-	}
-
-	void closePauseMenu() {
-		window->SetVisible(false);
+class PauseMenu : public MenuBase {
+	void setup() {
+		setName("Pause");
 	}
 };

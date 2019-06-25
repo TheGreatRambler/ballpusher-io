@@ -23,7 +23,7 @@
 #include <Urho3D/UI/UI.h>
 
 #include "SettingsGlobal.h"
-#include "menus/pauseMenu.h"
+//#include "menus/pauseMenu.h"
 
 Main::Main(Context* context) : Application(context), yaw_(0.0f), pitch_(0.0f), touchEnabled_(false), useMouseMode_(MM_ABSOLUTE), screenJoystickIndex_(M_MAX_UNSIGNED), screenJoystickSettingsIndex_(M_MAX_UNSIGNED), paused_(false) {
 }
@@ -62,8 +62,8 @@ void Main::Start() {
 	// Set custom window Title & Icon
 	SetWindowTitleAndIcon();
 
-	pauseMenu* thing = new pauseMenu(GetSubsystem<UI>(), context_);
-	thing->openPauseMenu();
+	// pauseMenu* thing = new pauseMenu(GetSubsystem<UI>(), context_);
+	// thing->openPauseMenu();
 
 	// Create console and debug HUD (not now)
 	CreateConsoleAndDebugHud();

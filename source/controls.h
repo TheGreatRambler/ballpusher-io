@@ -10,6 +10,14 @@ private:
 	int angleFacing = -1;
 	// angle facing when interpolitated
 	int interAngleFacing = -1;
+	// speed when interpolitating
+	int turnSpeed = 1;
+	/*
+		Inter or not
+		true: inter
+		false: non-inter
+	 */
+	bool angleType = true;
 	/*
 		Control types:
 		0: Keyboard
@@ -26,14 +34,14 @@ private:
 	int powerKeyboard = Urho3D::KEY_I;
 	int squatKeyboard = Urho3D::KEY_SHIFT;
 
-	int gamepadJoystick = Urho3D::CONTROLLER_BUTTON_LEFTSTICK; 
+	int gamepadJoystick = Urho3D::CONTROLLER_BUTTON_LEFTSTICK;
 	/*
 	Joystick mapping
 	When one changes, all change
 	Different because all of these are for the same control
 		0
 	  3   1
-	    2
+		2
 	*/
 	int upGamepad = 0;
 	int downGamepad = 2;
@@ -43,13 +51,56 @@ private:
 	int powerGamepad = Urho3D::CONTROLLER_BUTTON_RIGHTSHOULDER;
 	int squatGamepad = Urho3D::CONTROLLER_BUTTON_LEFTSHOULDER;
 
-	Input* inputSubsystem;
+	Urho3D::Input* inputSubsystem;
+
+	int getInterpolitatedMovement() {
+		// angles are only handled in integers
+		// gets shortest angle
+		int angle = 180 - abs(abs(angleFacing - interAngleFacing) - 180);
+		// true clockwize, false not clockwize
+		int delta = 360 - interAngleFacing;
+		int beta = angleFacing + delta;
+		beta = beta % 360;
+		bool direction = beta < 180;
+		if (direction) {
+			// turn clockwise
+			interAngleFacing = (interAngleFacing + turnSpeed) % 360;
+		} else {
+			// turn counter clockwise
+			int temp = (interAngleFacing - turnSpeed);
+			interAngleFacing = (temp < 0) ? 360 + temp : temp;
+		}
+	}
 
 public:
-	inputHandler(int pN, Input* iS) {
+	inputHandler(int pN, Urho3D::Input* iS) {
 		// pass GetSubsystem<Input>()
 		playerNum = pN;
 		inputSubsystem = iS;
+	};
+
+	void setTurnSpeed(int speed) {
+		turnSpeed = speed;
+	}
+
+	int getTurnSpeed() {
+		return turnSpeed;
+	}
+
+	int getAngle() {
+		return angleFacing;
+	}
+
+	int getInterAngle() {
+		return interAngleFacing;
+	}
+
+	void setAngleType(bool aT) {
+		angleType = aT;
+	}
+
+	bool getAngleType() {
+		return angleType;
 	}
 
 	void handleInput() {
@@ -68,13 +119,13 @@ public:
 			bool rightHeld = inputSubsystem->GetKeyDown(rightKeyboard);
 
 			/*
-			         0
+					 0
 			   315       45
 
 			  270   DIR   90
-		
+
 			   225       135
-			        180
+					180
 			 */
 
 			// handle directions
@@ -113,20 +164,17 @@ public:
 				}
 			}
 		}
-
-		// interpolitate angle
-		if (interAngleFacing == -1) {
-			interAngleFacing = angleFacing;
-		} else {
-			// angle from clockwise
-			int angleFromC;
-			// angle from counter clockwise
-			int angleFromCC;
-			if (interAngleFacing < angleFacing) {
-				// need to rotate clockwise
-
-			} else if (interAngleFacing > angleFacing) {
-				// need to rotate counterclockwise
+		if (angleType) {
+			// interpolitate it all
+			if (interAngleFacing == -1) {
+				// There is no angle
+				interAngleFacing = angleFacing;
+			} else if (angleFacing = -1) {
+				// No movement is needed
+				interAngleFacing = -1;
+			} else if (angleFacing != interAngleFacing) {
+				// interpolitate the directions
+				getInterpolitatedMovement();
 			}
 		}
 	}
