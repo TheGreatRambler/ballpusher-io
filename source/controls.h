@@ -4,14 +4,24 @@
 class inputHandler {
 private:
 	bool jumpHeld = false;
+	// Not yet used
 	bool powerHeld = false;
 	bool squatHeld = false;
+
+	bool lastJumpInput = false;
+	bool lastPowerInput = false;
+	bool lastSquatInput = false;
+
+	bool jumpFirstFrame = false;
+	bool powerFirstFrame = false;
+	bool squatFirstFrame = false;
+
 	// -1 means no directional input
 	int angleFacing = -1;
 	// angle facing when interpolitated
 	int interAngleFacing = -1;
 	// speed when interpolitating
-	int turnSpeed = 1;
+	int turnSpeed = 3;
 	/*
 		Inter or not
 		true: inter
@@ -32,7 +42,7 @@ private:
 	int rightKeyboard = Urho3D::KEY_D;
 	int jumpKeyboard = Urho3D::KEY_SPACE;
 	int powerKeyboard = Urho3D::KEY_I;
-	int squatKeyboard = Urho3D::KEY_SHIFT;
+	int squatKeyboard = Urho3D::KEY_U;
 
 	int gamepadJoystick = Urho3D::CONTROLLER_BUTTON_LEFTSTICK;
 	/*
@@ -53,7 +63,7 @@ private:
 
 	Urho3D::Input* inputSubsystem;
 
-	int getInterpolitatedMovement() {
+	void getInterpolitatedMovement() {
 		// angles are only handled in integers
 		// gets shortest angle
 		int angle = 180 - abs(abs(angleFacing - interAngleFacing) - 180);
@@ -62,13 +72,24 @@ private:
 		int beta = angleFacing + delta;
 		beta = beta % 360;
 		bool direction = beta < 180;
+		// For overshooting calculations
+		int overshoot = angleFacing - interAngleFacing;
+		// Determines if overshoot was clockwise, use negation for CC
+		bool didOvershootClockwise = overshoot < 180 || overshoot > -180;
 		if (direction) {
 			// turn clockwise
 			interAngleFacing = (interAngleFacing + turnSpeed) % 360;
+			if (didOvershootClockwise) {
+				// Overshot, correct movement
+				interAngleFacing = angleFacing;
+			}
 		} else {
 			// turn counter clockwise
-			int temp = (interAngleFacing - turnSpeed);
+			int temp = interAngleFacing - turnSpeed;
 			interAngleFacing = (temp < 0) ? 360 + temp : temp;
+			if (!didOvershootClockwise) {
+				interAngleFacing = angleFacing;
+			}
 		}
 	}
 
@@ -87,12 +108,22 @@ public:
 		return turnSpeed;
 	}
 
-	int getAngle() {
+	int getRawAngle() {
+		// For gamepads, this is the wanted angle most of the time
 		return angleFacing;
 	}
 
 	int getInterAngle() {
 		return interAngleFacing;
+	}
+
+	// Get angle based on angleType
+	int getAngle() {
+		if (angleType) {
+			return interAngleFacing;
+		} else {
+			return angleFacing;
+		}
 	}
 
 	void setAngleType(bool aT) {
@@ -103,8 +134,37 @@ public:
 		return angleType;
 	}
 
+	bool isJumpHeld() {
+		return jumpHeld;
+	}
+
+	bool isPowerHeld() {
+		return powerHeld;
+	}
+
+	bool isSquatHeld() {
+		return squatHeld;
+	}
+
+	bool isJumpPressed() {
+		return jumpFirstFrame;
+	}
+
+	bool isPowerPressed() {
+		return powerFirstFrame;
+	}
+
+	bool isSquatPressed() {
+		return squatFirstFrame;
+	}
+
 	void handleInput() {
 		// runs every frame
+
+		lastJumpInput = jumpHeld;
+		lastPowerInput = powerHeld;
+		lastSquatInput = squatHeld;
+
 		if (controlType == 0) {
 			// keyboard
 			jumpHeld = inputSubsystem->GetKeyDown(jumpKeyboard);
@@ -126,7 +186,7 @@ public:
 
 			   225       135
 					180
-			 */
+			*/
 
 			// handle directions
 			if (upHeld && !downHeld) {
@@ -164,14 +224,33 @@ public:
 				}
 			}
 		}
+
+		// Handle first frame inputs
+		// As in, stand as an onPressed handler
+		if (lastJumpInput == false && jumpHeld == true) {
+			jumpFirstFrame = true;
+		} else {
+			jumpFirstFrame = false;
+		}
+		if (lastPowerInput == false && powerHeld == true) {
+			powerFirstFrame = true;
+		} else {
+			powerFirstFrame = false;
+		}
+		if (lastSquatInput == false && squatHeld == true) {
+			squatFirstFrame = true;
+		} else {
+			squatFirstFrame = false;
+		}
+
 		if (angleType) {
 			// interpolitate it all
 			if (interAngleFacing == -1) {
 				// There is no angle
 				interAngleFacing = angleFacing;
-			} else if (angleFacing = -1) {
+			} else if (angleFacing == -1) {
 				// No movement is needed
-				interAngleFacing = -1;
+				interAngleFacing == -1;
 			} else if (angleFacing != interAngleFacing) {
 				// interpolitate the directions
 				getInterpolitatedMovement();
