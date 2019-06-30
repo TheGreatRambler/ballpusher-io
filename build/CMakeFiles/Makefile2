@@ -67,11 +67,13 @@ CMAKE_BINARY_DIR = C:\Users\aehar\Desktop\projects\IO_Game\build
 # Directory level rules for directory source
 
 # Convenience name for "all" pass in the directory.
+source/all: source/CMakeFiles/RESOURCE_CHECK.dir/all
 source/all: source/CMakeFiles/IoGameTarget.dir/all
 
 .PHONY : source/all
 
 # Convenience name for "clean" pass in the directory.
+source/clean: source/CMakeFiles/RESOURCE_CHECK.dir/clean
 source/clean: source/CMakeFiles/IoGameTarget.dir/clean
 
 .PHONY : source/clean
@@ -82,13 +84,50 @@ source/preinstall:
 .PHONY : source/preinstall
 
 #=============================================================================
+# Target rules for target source/CMakeFiles/RESOURCE_CHECK.dir
+
+# All Build rule for target.
+source/CMakeFiles/RESOURCE_CHECK.dir/all:
+	$(MAKE) -f source\CMakeFiles\RESOURCE_CHECK.dir\build.make source/CMakeFiles/RESOURCE_CHECK.dir/depend
+	$(MAKE) -f source\CMakeFiles\RESOURCE_CHECK.dir\build.make source/CMakeFiles/RESOURCE_CHECK.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\aehar\Desktop\projects\IO_Game\build\CMakeFiles --progress-num=4 "Built target RESOURCE_CHECK"
+.PHONY : source/CMakeFiles/RESOURCE_CHECK.dir/all
+
+# Include target in all.
+all: source/CMakeFiles/RESOURCE_CHECK.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+source/CMakeFiles/RESOURCE_CHECK.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\aehar\Desktop\projects\IO_Game\build\CMakeFiles 1
+	$(MAKE) -f CMakeFiles\Makefile2 source/CMakeFiles/RESOURCE_CHECK.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\aehar\Desktop\projects\IO_Game\build\CMakeFiles 0
+.PHONY : source/CMakeFiles/RESOURCE_CHECK.dir/rule
+
+# Convenience name for target.
+RESOURCE_CHECK: source/CMakeFiles/RESOURCE_CHECK.dir/rule
+
+.PHONY : RESOURCE_CHECK
+
+# clean rule for target.
+source/CMakeFiles/RESOURCE_CHECK.dir/clean:
+	$(MAKE) -f source\CMakeFiles\RESOURCE_CHECK.dir\build.make source/CMakeFiles/RESOURCE_CHECK.dir/clean
+.PHONY : source/CMakeFiles/RESOURCE_CHECK.dir/clean
+
+# clean rule for target.
+clean: source/CMakeFiles/RESOURCE_CHECK.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
 # Target rules for target source/CMakeFiles/IoGameTarget.dir
 
 # All Build rule for target.
-source/CMakeFiles/IoGameTarget.dir/all:
+source/CMakeFiles/IoGameTarget.dir/all: source/CMakeFiles/RESOURCE_CHECK.dir/all
 	$(MAKE) -f source\CMakeFiles\IoGameTarget.dir\build.make source/CMakeFiles/IoGameTarget.dir/depend
 	$(MAKE) -f source\CMakeFiles\IoGameTarget.dir\build.make source/CMakeFiles/IoGameTarget.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\aehar\Desktop\projects\IO_Game\build\CMakeFiles --progress-num=1,2,3,4,5 "Built target IoGameTarget"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\aehar\Desktop\projects\IO_Game\build\CMakeFiles --progress-num=1,2,3 "Built target IoGameTarget"
 .PHONY : source/CMakeFiles/IoGameTarget.dir/all
 
 # Include target in all.
@@ -98,7 +137,7 @@ all: source/CMakeFiles/IoGameTarget.dir/all
 
 # Build rule for subdir invocation for target.
 source/CMakeFiles/IoGameTarget.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\aehar\Desktop\projects\IO_Game\build\CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\aehar\Desktop\projects\IO_Game\build\CMakeFiles 4
 	$(MAKE) -f CMakeFiles\Makefile2 source/CMakeFiles/IoGameTarget.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\aehar\Desktop\projects\IO_Game\build\CMakeFiles 0
 .PHONY : source/CMakeFiles/IoGameTarget.dir/rule

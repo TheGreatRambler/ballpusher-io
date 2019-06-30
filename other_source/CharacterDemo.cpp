@@ -27,8 +27,8 @@
 #include "Touch.h"
 
 #include <Urho3D/DebugNew.h>
-
-URHO3D_DEFINE_APPLICATION_MAIN(CharacterDemo)
+// I want the other application to run now
+// URHO3D_DEFINE_APPLICATION_MAIN(CharacterDemo)
 
 CharacterDemo::CharacterDemo(Context* context) : Main(context), firstPerson_(false) {
 	// Register factory and attributes for the Character component so it can be created via CreateComponent, and loaded / saved

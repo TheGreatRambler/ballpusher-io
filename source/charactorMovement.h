@@ -221,15 +221,11 @@ public:
 			int inputNum;
 			// If both inputs were handled this frame, jump overrules
 			// Pretty rare occurrence
-			if (jump && squat) {
+			if (squat) {
+				inputNum = SQUAT;
+			}
+			if (jump) {
 				inputNum = JUMP;
-			} else {
-				if (jump) {
-					inputNum = JUMP;
-				}
-				if (squat) {
-					inputNum = SQUAT;
-				}
 			}
 
 			// If angle is -1. no angle is being inputted
@@ -302,6 +298,7 @@ public:
 
 				// Only the first move is actually performed
 				currentMove = movesReady.front();
+				// Don't delete instances
 				movesReady.clear();
 				// Start up move (will be updated)
 				currentMove->performMove();

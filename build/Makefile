@@ -156,6 +156,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named RESOURCE_CHECK
+
+# Build rule for target.
+RESOURCE_CHECK: cmake_check_build_system
+	$(MAKE) -f CMakeFiles\Makefile2 RESOURCE_CHECK
+.PHONY : RESOURCE_CHECK
+
+# fast build rule for target.
+RESOURCE_CHECK/fast:
+	$(MAKE) -f source\CMakeFiles\RESOURCE_CHECK.dir\build.make source/CMakeFiles/RESOURCE_CHECK.dir/build
+.PHONY : RESOURCE_CHECK/fast
+
+#=============================================================================
 # Target rules for targets named IoGameTarget
 
 # Build rule for target.
@@ -180,6 +193,7 @@ help:
 	@echo ... rebuild_cache
 	@echo ... list_install_components
 	@echo ... install/strip
+	@echo ... RESOURCE_CHECK
 	@echo ... IoGameTarget
 .PHONY : help
 

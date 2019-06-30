@@ -65,5 +65,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
+  "source/CMakeFiles/RESOURCE_CHECK.dir/DependInfo.cmake"
   "source/CMakeFiles/IoGameTarget.dir/DependInfo.cmake"
   )
