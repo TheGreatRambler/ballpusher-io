@@ -74,6 +74,7 @@ public:
 	}
 
 	void initSubsystems() {
+		// Set these variables to the subsystems so they are easily accessable
 		cache = GetSubsystem<Urho3D::ResourceCache>();
 		graphics = GetSubsystem<Urho3D::Graphics>();
 		ui = GetSubsystem<Urho3D::UI>();

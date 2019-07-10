@@ -1,5 +1,7 @@
+#include <Urho3D/Graphics/Camera.h>
 #include <Urho3D/Physics/PhysicsWorld.h>
 #include <Urho3D/Physics/RigidBody.h>
+#include <Urho3D/Scene/Node.h>
 
 #include <vector>
 
@@ -17,7 +19,10 @@ enum MOVESET_CONSTANTS : int {
 
 class MoveBase {
 protected:
+	Urho3D::Node* playerNode;
 	Urho3D::RigidBody* player;
+	// Not the camera itself
+	Urho3D::Node* camera;
 
 	inputHandler* inputSystem;
 
@@ -73,10 +78,43 @@ protected:
 	// Set on start of move by performMove
 	bool moveIsOccurring = false;
 
+	Urho3D::Vector3 rotateForce(Urho3D::Vector3 force) {
+		return playerNode->GetWorldRotation() * force;
+	}
+
+	// Just for helper to jump
+	float timeSinceStart = 0;
+	void helperHoldToJump(Urho3D::Vector3 velocityToAdd, float delta, float timeToEnd) {
+		if (inputSystem->isJumpHeld()) {
+			timeSinceStart += delta;
+			if (timeSinceStart < timeToEnd) {
+				// Only keep going if the maximum time to hold is not exceeded
+				// Number of milliseconds
+				float divisionFactor = (timeSinceStart * 1000);
+				// Division factor shouldn't be less than 0, or weird things will happen
+				// Shouldn't happen, though
+				Urho3D::Vector3 forceToApply = (velocityToAdd * delta) / divisionFactor;
+				// Should add force to the rigidbody
+				player->ApplyImpulse(rotateForce(forceToApply));
+			}
+		} else {
+			timeSinceStart = 0;
+			// End move
+			moveIsOccurring = false;
+		}
+	}
+
 public:
-	MoveBase(Urho3D::RigidBody* p) {
+	MoveBase(Urho3D::RigidBody* p, inputHandler* iH) {
 		// Create player rigidbody
 		player = p;
+		inputSystem = iH;
+	}
+
+	virtual void init() = 0;
+
+	void start() {
+		moveIsOccurring = true;
 	}
 
 	// Preforms the move's action
@@ -84,11 +122,13 @@ public:
 
 	// Included so recieved inputs can be handled when recieved
 	// For example, holding jump so a higher jump can be achieved
-	virtual void update() = 0;
+	virtual void update(float delta) = 0;
 
 	// Included so the move can let the main program know when it is done performing
 	// (Usually when the jump button is not held anymore)
-	virtual bool isDone() = 0;
+	bool isDone() {
+		return !moveIsOccurring;
+	}
 
 	// Let the move know that it has just ended
 	// (Not permamently, but for this cycle)
