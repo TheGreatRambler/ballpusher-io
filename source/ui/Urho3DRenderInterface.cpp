@@ -1,9 +1,7 @@
 #include "Urho3DRenderInterface.h"
 #include <RmlUi/Core.h>
 
-#include "Color.h"
-#include "Context.h"
-#include "Graphics.h"
+// I hate this so much
 #include "IndexBuffer.h"
 #include "Material.h"
 #include "Rect.h"
@@ -12,6 +10,9 @@
 #include "Texture.h"
 #include "Vector3.h"
 #include "VertexBuffer.h"
+#include <Urho3D/Core/Context.h>
+#include <Urho3D/Graphics/Graphics.h>
+#include <Urho3D/Math/Color.h>
 #include <list>
 
 using namespace Urho3D;

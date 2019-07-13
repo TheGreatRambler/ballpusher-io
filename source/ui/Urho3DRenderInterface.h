@@ -1,6 +1,3 @@
-#ifndef ROCKETURHO3DERENDERINTERFACE_H
-#define ROCKETURHO3DERENDERINTERFACE_H
-
 #include "Context.h"
 #include "Object.h"
 #include "Rect.h"
@@ -60,5 +57,3 @@ private:
 	SharedPtr<ShaderVariation> diffTextureVS;
 	SharedPtr<ShaderVariation> diffTexturePS;
 };
-
-#endif

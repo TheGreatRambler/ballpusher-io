@@ -1,11 +1,8 @@
-#ifndef ROCKETURHO3DSYSTEMINTERFACE_H
-#define ROCKETURHO3DSYSTEMINTERFACE_H
-
-#include "Context.h"
 #include <RmlUi/Core/SystemInterface.h>
+#include <Urho3D/Core/Context.h>
 
 /**
-	A custom system interface for Rocket. This provides timing information.
+	A custom system interface for RmlUi. This provides timing information.
  */
 
 class Urho3DSystemInterface : public Rml::Core::SystemInterface {
@@ -18,6 +15,6 @@ public:
 	/// Get the number of seconds elapsed since the start of the application
 	/// @returns Seconds elapsed
 	virtual double GetElapsedTime();
-};
 
-#endif
+	virtual bool LogMessage(Rml::Core::Log::Type type, const Rml::Core::String& message);
+};

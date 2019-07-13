@@ -22,8 +22,13 @@
 #include <Urho3D/UI/Sprite.h>
 #include <Urho3D/UI/UI.h>
 
+#include <RmlUi/Core.h>
+
 #include "SettingsGlobal.h"
 #include "controls.h"
+
+#include "ui/Urho3DRenderInterface.h"
+#include "ui/Urho3DSystemInterface.h"
 
 class MainEntry : public Urho3D::Application {
 	// Enable events
@@ -39,11 +44,17 @@ private:
 	Urho3D::Input* input;
 	Urho3D::Renderer* renderer;
 
+	// For the UI
+	Urho3DSystemInterface rocketSystemInterface;
+	Urho3DRenderInterface rocketRenderer;
+	Rml::Core::Context* uiContext;
+
 	inputHandler* controls;
 
 public:
 	// Starting constructor
-	MainEntry(Urho3D::Context* context) : Application(context) {
+	MainEntry(Urho3D::Context* context) : Application(context), rocketSystemInterface(context), rocketRenderer(context) {
+		// Had to init them
 	}
 
 	void Setup() {
@@ -71,6 +82,7 @@ public:
 		initSubsystems();
 		subscribeToEvents();
 		createControls();
+		setupUI();
 	}
 
 	void initSubsystems() {
@@ -89,6 +101,20 @@ public:
 	void createControls() {
 		// Create player 0 (or player 1)
 		controls = new inputHandler(0, input);
+	}
+
+	void setupUI() {
+		Rml::Core::SetRenderInterface(&rocketRenderer);
+		Rml::Core::SetSystemInterface(&rocketSystemInterface);
+
+		Rml::Core::Initialise();
+
+		int w = graphics->GetWidth();
+		int h = graphics->GetHeight();
+
+		// Main context
+		uiContext = Rml::Core::CreateContext("main", Rml::Core::Vector2i(w, h));
+		// If uiContext is NULL, the ui failed
 	}
 
 	void onSceneUpdate(Urho3D::StringHash eventType, Urho3D::VariantMap& eventData) {
