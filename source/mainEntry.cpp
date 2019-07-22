@@ -22,13 +22,10 @@
 #include <Urho3D/UI/Sprite.h>
 #include <Urho3D/UI/UI.h>
 
-#include <RmlUi/Core.h>
-
 #include "SettingsGlobal.h"
 #include "controls.h"
 
-#include "ui/Urho3DRenderInterface.h"
-#include "ui/Urho3DSystemInterface.h"
+#include "ui/uiSystem.h"
 
 class MainEntry : public Urho3D::Application {
 	// Enable events
@@ -44,16 +41,15 @@ private:
 	Urho3D::Input* input;
 	Urho3D::Renderer* renderer;
 
-	// For the UI
-	Urho3DSystemInterface rocketSystemInterface;
-	Urho3DRenderInterface rocketRenderer;
-	Rml::Core::Context* uiContext;
-
+	// Input handler
 	inputHandler* controls;
+
+	// UI handler (I name things badly)
+	uiSystem* uiHandler;
 
 public:
 	// Starting constructor
-	MainEntry(Urho3D::Context* context) : Application(context), rocketSystemInterface(context), rocketRenderer(context) {
+	MainEntry(Urho3D::Context* context) : Application(context) {
 		// Had to init them
 	}
 
@@ -95,7 +91,10 @@ public:
 	}
 
 	void subscribeToEvents() {
+		// Simple update loop
 		SubscribeToEvent(Urho3D::E_UPDATE, URHO3D_HANDLER(MainEntry, onSceneUpdate));
+		// After rendering (Used mainly for the UI)
+		SubscribeToEvent(Urho3D::E_POSTRENDERUPDATE, URHO3D_HANDLER(MainEntry, onSceneEndRendering));
 	}
 
 	void createControls() {
@@ -104,30 +103,30 @@ public:
 	}
 
 	void setupUI() {
-		Rml::Core::SetRenderInterface(&rocketRenderer);
-		Rml::Core::SetSystemInterface(&rocketSystemInterface);
-
-		Rml::Core::Initialise();
-
-		int w = graphics->GetWidth();
-		int h = graphics->GetHeight();
-
-		// Main context
-		uiContext = Rml::Core::CreateContext("main", Rml::Core::Vector2i(w, h));
-		// If uiContext is NULL, the ui failed
+		// Start UI
+		uiHandler = new uiSystem(context_, graphics);
 	}
 
 	void onSceneUpdate(Urho3D::StringHash eventType, Urho3D::VariantMap& eventData) {
 		// Handle update
 		// Timestep
 		float timeStep = eventData[Urho3D::Update::P_TIMESTEP].GetFloat();
+
+		// Update UI
+		uiHandler->update();
+
 		if (input->GetKeyDown(Urho3D::KEY_ESCAPE)) {
 			Stop();
 		}
 	}
 
+	void onSceneEndRendering(Urho3D::StringHash eventType, Urho3D::VariantMap& eventData) {
+		uiHandler->render();
+	}
+
 	void Stop() {
 		// engine_->DumpResources(true);
+		uiHandler->shutdown();
 		engine_->Exit();
 	}
 

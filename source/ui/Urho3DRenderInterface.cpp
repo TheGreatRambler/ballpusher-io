@@ -1,18 +1,17 @@
 #include "Urho3DRenderInterface.h"
 #include <RmlUi/Core.h>
 
-// I hate this so much
-#include "IndexBuffer.h"
-#include "Material.h"
-#include "Rect.h"
-#include "Renderer.h"
-#include "ResourceCache.h"
-#include "Texture.h"
-#include "Vector3.h"
-#include "VertexBuffer.h"
+#include <RmlUi/Core/Texture.h>
+#include <RmlUi/Core/Vector3.h>
 #include <Urho3D/Core/Context.h>
 #include <Urho3D/Graphics/Graphics.h>
+#include <Urho3D/Graphics/IndexBuffer.h>
+#include <Urho3D/Graphics/Material.h>
+#include <Urho3D/Graphics/Renderer.h>
+#include <Urho3D/Graphics/VertexBuffer.h>
 #include <Urho3D/Math/Color.h>
+#include <Urho3D/Math/Rect.h>
+#include <Urho3D/Resource/ResourceCache.h>
 #include <list>
 
 using namespace Urho3D;

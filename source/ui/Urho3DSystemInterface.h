@@ -1,5 +1,6 @@
-#include <RmlUi/Core/SystemInterface.h>
 #include <Urho3D/Core/Context.h>
+
+#include <RmlUi/Core/SystemInterface.h>
 
 /**
 	A custom system interface for RmlUi. This provides timing information.

@@ -1,9 +1,9 @@
-#include "Context.h"
-#include "Object.h"
-#include "Rect.h"
-#include "RmlUi/Core/RenderInterface.h"
-#include "ShaderVariation.h"
-#include "Texture2D.h"
+#include <RmlUi/Core/Context.h>
+#include <RmlUi/Core/RenderInterface.h>
+#include <Urho3D/Core/Object.h>
+#include <Urho3D/Graphics/ShaderVariation.h>
+#include <Urho3D/Graphics/Texture2D.h>
+#include <Urho3D/Math/Rect.h>
 #include <vector>
 
 using namespace Urho3D;

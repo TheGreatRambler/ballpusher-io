@@ -26,5 +26,7 @@ endif ()
 set (CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/CMake/Modules)
 # Include Urho3D Cmake common module
 include (UrhoCommon)
+
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
 # Add source files to project
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/source")

@@ -1,3 +1,6 @@
-build
-include
-.vscode
+/build
+/bin/Data
+/bin/CoreData
+/include
+/.vscode
+/CMake
